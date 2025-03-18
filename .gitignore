@@ -1,0 +1,5 @@
+*.zip
+/dev_output
+/dev_queries
+/pa1-data
+/toy-data
