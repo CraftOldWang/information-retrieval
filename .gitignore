@@ -1,5 +1,6 @@
 *.zip
-/dev_output
-/dev_queries
-/pa1-data
-/toy-data
+**/dev_output
+**/dev_queries
+**/pa1-data
+**/toy-data
+/.venv
