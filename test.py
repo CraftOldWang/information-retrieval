@@ -31,3 +31,8 @@ def trans(num):
         else:
             out.insert(0, int(f"1{to_encode}",base=2)) 
     return out
+
+
+from bitstring import BitArray
+
+BitArray.
