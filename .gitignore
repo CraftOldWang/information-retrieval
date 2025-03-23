@@ -3,4 +3,6 @@
 **/dev_queries
 **/pa1-data
 **/toy-data
+*.pdf
+/23*.ipynb
 /.venv
