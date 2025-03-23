@@ -36,3 +36,6 @@ def trans(num):
 from bitstring import BitArray
 
 BitArray.
+
+
+
