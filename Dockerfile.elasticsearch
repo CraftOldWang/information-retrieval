@@ -1,0 +1,6 @@
+FROM elasticsearch:8.10.2
+
+# 安装 IK 分词插件（版本号和ES版本对应）
+RUN bin/elasticsearch-plugin install --batch https://get.infini.cloud/elasticsearch/analysis-ik/8.10.2
+
+# 如果需要，也可以做其他自定义操作

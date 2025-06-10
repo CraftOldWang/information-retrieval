@@ -1,0 +1,58 @@
+{
+  "mappings": {
+    "properties": {
+      "url": {
+        "type": "keyword"
+      },
+      "title": {
+        "type": "text",
+        "analyzer": "standard",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "content": {
+        "type": "text",
+        "analyzer": "standard"
+      },
+      "anchor_texts": {
+        "type": "text",
+        "analyzer": "standard"
+      },
+      "domain": {
+        "type": "keyword"
+      },
+      "crawl_time": {
+        "type": "date"
+      },
+      "last_modified": {
+        "type": "date"
+      },
+      "content_type": {
+        "type": "keyword"
+      },
+      "file_size": {
+        "type": "integer"
+      },
+      "links_count": {
+        "type": "integer"
+      },
+      "depth": {
+        "type": "integer"
+      }
+    }
+  },
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0,
+    "analysis": {
+      "analyzer": {
+        "default": {
+          "type": "standard"
+        }
+      }
+    }
+  }
+}

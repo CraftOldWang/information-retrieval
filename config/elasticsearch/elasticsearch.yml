@@ -1,0 +1,35 @@
+# Elasticsearch 配置文件
+# 用于NKU搜索引擎项目
+
+cluster.name: nku-search-cluster
+node.name: nku-search-node-1
+
+# 网络设置
+network.host: 0.0.0.0
+http.port: 9200
+transport.port: 9300
+
+# 发现设置
+discovery.type: single-node
+
+# 安全设置（开发环境）
+xpack.security.enabled: false
+xpack.monitoring.collection.enabled: false
+
+# 内存设置
+bootstrap.memory_lock: false
+
+# 路径设置
+path.data: /usr/share/elasticsearch/data
+path.logs: /usr/share/elasticsearch/logs
+
+# 索引设置
+action.auto_create_index: true
+
+# JVM设置
+cluster.routing.allocation.disk.watermark.low: 85%
+cluster.routing.allocation.disk.watermark.high: 90%
+cluster.routing.allocation.disk.watermark.flood_stage: 95%
+# 分析器设置（需要安装IK分词器后才生效）
+# index.analysis.analyzer.default.type: ik_max_word
+# index.analysis.search_analyzer.default.type: ik_smart

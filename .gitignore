@@ -1,0 +1,90 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+.venv/
+.env/
+.envrc
+*.env
+
+# VSCode & IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# Byte-compiled / optimized / DLL files
+*.dll
+*.egg
+*.egg-info/
+*.manifest
+*.spec
+
+# Logs
+*.log
+*.out
+*.err
+logs/
+data/logs/
+
+# SQLite
+*.sqlite3
+*.db
+*.db-journal
+data/sqlite/
+
+# Docker
+*.pid
+*.sock
+*.tar
+*.gz
+*.img
+*.bak
+docker-compose.override.yml
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-error.log
+frontend/build/
+frontend/dist/
+frontend/.next/
+frontend/.cache/
+
+# Scrapy
+.scrapy/
+crawler/.scrapy/
+crawler/output/
+
+# Coverage / testing
+.coverage
+.tox/
+.nox/
+.coverage.*
+.cache
+pytest_cache/
+
+# System
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Snapshots / temp data
+data/snapshots/
+*.swp
+*.tmp
+*.bak
+*.old
+*.orig
+
+# Compiled frontend
+frontend/static/
+
+# Git
+*.orig
+
+# Docs temp
+docs/**/*.tmp.md
