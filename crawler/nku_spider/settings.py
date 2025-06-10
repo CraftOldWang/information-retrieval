@@ -95,6 +95,15 @@ REDIS_HOST = "localhost"
 REDIS_PORT = 6379
 REDIS_DB = 0
 
+# 添加以下配置以启用Redis分布式爬虫
+# 注释掉这些行可以切换回普通模式
+# Redis分布式爬虫设置
+# SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+# DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+# SCHEDULER_PERSIST = True  # 保持爬取状态
+# SCHEDULER_QUEUE_CLASS = "scrapy_redis.queue.SpiderPriorityQueue"
+# REDIS_START_URLS_AS_SET = False  # 使用列表而不是集合存储起始URL
+
 # Elasticsearch配置
 ELASTICSEARCH_HOST = "localhost"
 ELASTICSEARCH_PORT = 9200
@@ -113,15 +122,18 @@ DEPTH_PRIORITY = 1  # 深度优先
 
 # 允许爬取的域名
 ALLOWED_DOMAINS = [
-    "nankai.edu.cn",
-    "www.nankai.edu.cn",
-    "news.nankai.edu.cn",
-    "jwb.nankai.edu.cn",
-    "lib.nankai.edu.cn",
-    # 移除经常超时的域名，避免网络问题
-    # "english.nankai.edu.cn",  # 网络连接不稳定
-    # "business.nankai.edu.cn",  # 网络连接不稳定
+    "nankai.edu.cn",  # 这样配置会包含所有nankai.edu.cn的子域名
 ]
+
+# 爬虫限制设置
+CLOSESPIDER_ITEMCOUNT = 1000000  # 最大爬取项目数量
+CLOSESPIDER_TIMEOUT = 0  # 不设置超时，便于长时间爬取
+DEPTH_LIMIT = 10  # 设置爬取深度限制，避免无限递归
+
+# 文件存储配置
+FILES_STORE = 'data/documents'
+# 不下载特大文件
+DOWNLOAD_MAXSIZE = 20 * 1024 * 1024  # 20MB
 
 # 网络连接优化设置
 ROBOTSTXT_OBEY = True

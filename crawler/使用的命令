@@ -1,0 +1,63 @@
+
+目录
+cd d:\1Learningoutput\Year2_Part2\Information_Retrieval\hw4Web_redo\crawler
+
+开始爬
+scrapy crawl nku_main `
+    -s CLOSESPIDER_PAGECOUNT=100000 `
+    -s JOBDIR=crawls/nku-1 `
+    -s LOG_LEVEL=INFO `
+    -s LOG_FILE=../data/logs/crawler_$(Get-Date -Format "yyyyMMdd_HHmmss").log
+
+修改后....
+scrapy crawl nku_main `
+    -s CLOSESPIDER_PAGECOUNT=100000 `
+    -s JOBDIR=crawls/nku-2 `
+    -s LOG_LEVEL=INFO `
+    -s LOG_FILE=../data/logs/crawler_$(Get-Date -Format "yyyyMMdd_HHmmss").log
+
+
+为了加速的命令
+scrapy crawl nku_main `
+    -s CLOSESPIDER_PAGECOUNT=100000 `
+    -s JOBDIR=crawls/nku-3 `
+    -s DOWNLOAD_DELAY=1 `
+    -s CONCURRENT_REQUESTS=32 `
+    -s CONCURRENT_REQUESTS_PER_DOMAIN=16 `
+    -s AUTOTHROTTLE_TARGET_CONCURRENCY=4.0 `
+    -s LOG_LEVEL=INFO `
+    -s LOG_FILE=../data/logs/crawler_$(Get-Date -Format "yyyyMMdd_HHmmss").log
+
+
+# 爬虫组1 - 主站和核心部门网站
+scrapy crawl nku_main -a start_urls="https://www.nankai.edu.cn,https://news.nankai.edu.cn,https://jwc.nankai.edu.cn" `
+    -s CLOSESPIDER_PAGECOUNT=40000 `
+    -s JOBDIR=crawls/nku-group1 `
+    -s DOWNLOAD_DELAY=1 `
+    -s CONCURRENT_REQUESTS=24 `
+    -s CONCURRENT_REQUESTS_PER_DOMAIN=8 `
+    -s AUTOTHROTTLE_TARGET_CONCURRENCY=2.0 `
+    -s LOG_LEVEL=INFO `
+    -s LOG_FILE=../data/logs/crawler_group1_$(Get-Date -Format "yyyyMMdd_HHmmss").log
+
+# 爬虫组2 - 院系网站第一组
+scrapy crawl nku_main -a start_urls="https://wxy.nankai.edu.cn,https://history.nankai.edu.cn,https://phil.nankai.edu.cn,https://law.nankai.edu.cn,https://zfxy.nankai.edu.cn,https://economics.nankai.edu.cn" `
+    -s CLOSESPIDER_PAGECOUNT=30000 `
+    -s JOBDIR=crawls/nku-group2 `
+    -s DOWNLOAD_DELAY=1 `
+    -s CONCURRENT_REQUESTS=24 `
+    -s CONCURRENT_REQUESTS_PER_DOMAIN=8 `
+    -s AUTOTHROTTLE_TARGET_CONCURRENCY=2.0 `
+    -s LOG_LEVEL=INFO `
+    -s LOG_FILE=../data/logs/crawler_group2_$(Get-Date -Format "yyyyMMdd_HHmmss").log
+
+# 爬虫组3 - 院系网站第二组和其他网站
+scrapy crawl nku_main -a start_urls="https://bs.nankai.edu.cn,https://math.nankai.edu.cn,https://physics.nankai.edu.cn,https://chem.nankai.edu.cn,https://sky.nankai.edu.cn,https://medical.nankai.edu.cn,https://international.nankai.edu.cn,https://lib.nankai.edu.cn,https://career.nankai.edu.cn,https://zsb.nankai.edu.cn" `
+    -s CLOSESPIDER_PAGECOUNT=30000 `
+    -s JOBDIR=crawls/nku-group3 `
+    -s DOWNLOAD_DELAY=1 `
+    -s CONCURRENT_REQUESTS=24 `
+    -s CONCURRENT_REQUESTS_PER_DOMAIN=8 `
+    -s AUTOTHROTTLE_TARGET_CONCURRENCY=2.0 `
+    -s LOG_LEVEL=INFO `
+    -s LOG_FILE=../data/logs/crawler_group3_$(Get-Date -Format "yyyyMMdd_HHmmss").log

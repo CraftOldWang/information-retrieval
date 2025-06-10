@@ -258,7 +258,6 @@ es.indices.create(
                 "content": {"type": "text", "analyzer": "ik_smart"},
                 "domain": {"type": "keyword"},
                 "last_updated": {"type": "date"},
-                "page_rank": {"type": "float"},
                 "attachments": {
                     "type": "nested",
                     "properties": {

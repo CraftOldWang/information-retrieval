@@ -1,3 +1,11 @@
+
+# I think these should be ignored
+data/backups/
+crawls/
+*.crawled_data*.json
+data/
+
+
 # Python
 __pycache__/
 *.py[cod]

@@ -62,9 +62,6 @@
     "crawl_time": {
         "type": "date"
     },
-    "page_rank": {
-        "type": "float"
-    },
     "attachments": {
         "type": "nested",
         "properties": {

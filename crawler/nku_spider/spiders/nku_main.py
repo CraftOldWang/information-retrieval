@@ -13,7 +13,7 @@ from ..items import WebPageItem, AnchorTextItem, DocumentItem
 
 class NkuMainSpider(scrapy.Spider):
     name = "nku_main"
-    allowed_domains = ["nankai.edu.cn", "www.nankai.edu.cn"]
+    allowed_domains = ["nankai.edu.cn"]  # 基本域名，包含所有子域
     start_urls = [
         # 主站及核心站点
         "https://www.nankai.edu.cn",
@@ -47,7 +47,10 @@ class NkuMainSpider(scrapy.Spider):
         "https://zsb.nankai.edu.cn",
         # "https://xyh.nankai.edu.cn",
         # "https://mooc.nankai.edu.cn"
-    ]   
+    ]
+
+    # 动态发现并记录的子域名
+    discovered_domains = set()
 
     # 自定义设置
     custom_settings = {
@@ -55,9 +58,14 @@ class NkuMainSpider(scrapy.Spider):
         "RANDOMIZE_DOWNLOAD_DELAY": True,
         "CONCURRENT_REQUESTS_PER_DOMAIN": 4,
     }
-
-    def __init__(self, *args, **kwargs):
+    
+    def __init__(self, start_urls=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # 如果提供了start_urls参数，则使用它来替换默认的start_urls
+        if start_urls:
+            self.start_urls = start_urls.split(',') if isinstance(start_urls, str) else start_urls
+            self.logger.info(f"使用自定义起始URL: {self.start_urls}")
+        # 初始化链接提取器
         self.link_extractor = LinkExtractor(
             allow_domains=self.allowed_domains,
             deny=[
@@ -73,8 +81,8 @@ class NkuMainSpider(scrapy.Spider):
                 r"/download/",
                 r"/files/",
                 r"/uploads/",
-            ],
-            restrict_text=["更多", "详情", "查看", "阅读", "进入", "点击"],
+            ]
+            # 移除restrict_text限制，允许爬取所有链接文本
         )
 
         # 文档链接提取器
@@ -82,6 +90,12 @@ class NkuMainSpider(scrapy.Spider):
             allow_domains=self.allowed_domains,
             allow=[r".*\.(pdf|doc|docx|xls|xlsx|ppt|pptx)$"],
         )
+        
+        # 初始化已发现的域名集合
+        for url in self.start_urls:
+            parsed_url = urlparse(url)
+            if parsed_url.netloc:
+                self.discovered_domains.add(parsed_url.netloc)
 
     def parse(self, response):
         """解析页面内容"""
@@ -112,10 +126,15 @@ class NkuMainSpider(scrapy.Spider):
         item["attachments"] = attachments
 
         yield item
-
         # 继续爬取链接
         links = self.link_extractor.extract_links(response)
         for link in links:
+            # 记录新发现的域名
+            parsed_url = urlparse(link.url)
+            if parsed_url.netloc and parsed_url.netloc.endswith('nankai.edu.cn') and parsed_url.netloc not in self.discovered_domains:
+                self.discovered_domains.add(parsed_url.netloc)
+                self.logger.info(f"发现新域名: {parsed_url.netloc}")
+            
             yield scrapy.Request(
                 url=link.url,
                 callback=self.parse,

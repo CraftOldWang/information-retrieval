@@ -179,7 +179,6 @@ class ElasticsearchPipeline:
         if not self.es:
             spider.logger.error("Elasticsearch客户端未初始化，无法创建索引")
             return
-
         # 网页索引配置
         webpage_mapping = {
             "mappings": {
@@ -191,26 +190,37 @@ class ElasticsearchPipeline:
                         "fields": {"keyword": {"type": "keyword"}},
                     },
                     "content": {"type": "text", "analyzer": "default"},
-                    "anchor_texts": {"type": "text", "analyzer": "default"},
+                    "html": {"type": "text", "store": True},  # 存储HTML
+                    "anchor_texts": {
+                        "type": "nested",  # 嵌套类型
+                        "properties": {
+                            "text": {"type": "text", "analyzer": "default"},
+                            "href": {"type": "keyword"}
+                        }
+                    },
                     "domain": {"type": "keyword"},
-                    "crawl_time": {"type": "date"},
-                    "last_modified": {"type": "date"},
-                    "page_rank": {"type": "float", "null_value": 0.0},
+                    "metadata": {
+                        "properties": {
+                            "crawl_time": {"type": "date"},
+                            "last_modified": {"type": "date"},
+                            "content_type": {"type": "keyword"},
+                        }
+                    },
                     "attachments": {
                         "type": "nested",
                         "properties": {
                             "url": {"type": "keyword"},
-                            "filename": {"type": "text"},
-                            "file_type": {"type": "keyword"},
-                            "file_size": {"type": "long"},
+                            "filename": {
+                                "type": "text",
+                                "fields": {"keyword": {"type": "keyword"}},
+                            },
+                            "type": {"type": "keyword"},
                             "metadata": {
                                 "properties": {
-                                    "title": {
-                                        "type": "text",
-                                        "analyzer": "default",
-                                    },
+                                    "title": {"type": "text", "analyzer": "default"},
                                     "author": {"type": "text"},
                                     "upload_date": {"type": "date"},
+                                    "file_size": {"type": "long"},
                                 }
                             },
                         },
@@ -231,7 +241,7 @@ class ElasticsearchPipeline:
         try:
             # 创建网页索引
             if not self.es.indices.exists(index="nku_webpages"):
-                self.es.indices.create(index="nku_webpages", **webpage_mapping)
+                self.es.indices.create(index="nku_webpages", body=webpage_mapping)
                 spider.logger.info("创建网页索引成功")
 
         except Exception as e:
