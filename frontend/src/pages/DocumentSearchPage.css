@@ -1,0 +1,189 @@
+.document-search-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.document-search-content {
+  flex: 1;
+  padding: 20px;
+  margin-top: 60px; /* 为固定的header留出空间 */
+  display: flex;
+  flex-direction: column;
+}
+
+.search-header {
+  margin-bottom: 20px;
+}
+
+.search-box-container {
+  margin-bottom: 15px;
+}
+
+.document-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.doc-types,
+.date-filter {
+  flex: 1;
+  min-width: 250px;
+}
+
+.doc-types h3,
+.date-filter h3 {
+  font-size: 16px;
+  color: #202124;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.doc-type-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.doc-type-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.doc-type-option input {
+  margin-right: 8px;
+}
+
+.doc-type-option span {
+  font-size: 14px;
+  color: #5f6368;
+}
+
+.date-inputs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.date-inputs input {
+  padding: 6px 10px;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.date-inputs input:focus {
+  outline: none;
+  border-color: #1a73e8;
+}
+
+.date-inputs span {
+  color: #5f6368;
+  font-size: 14px;
+}
+
+.document-results-container {
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.results-info {
+  color: #70757a;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.results-list {
+  margin-bottom: 30px;
+}
+
+.loading-indicator,
+.error-message,
+.no-results,
+.search-prompt {
+  text-align: center;
+  padding: 30px;
+  color: #5f6368;
+}
+
+.error-message {
+  color: #d93025;
+}
+
+.search-prompt {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 40px;
+}
+
+.search-prompt p {
+  margin: 0 0 10px;
+  font-size: 16px;
+  color: #202124;
+}
+
+.search-tip {
+  font-size: 14px;
+  color: #5f6368;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.pagination-button {
+  background-color: #f8f9fa;
+  border: 1px solid #dadce0;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #1a73e8;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background-color: #e8f0fe;
+}
+
+.pagination-button:disabled {
+  color: #9aa0a6;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  color: #5f6368;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .document-filters {
+    flex-direction: column;
+  }
+  
+  .doc-type-options {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+  
+  .date-inputs {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .date-inputs input {
+    width: 100%;
+  }
+}

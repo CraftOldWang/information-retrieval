@@ -1,0 +1,144 @@
+.snapshot-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.snapshot-content {
+  flex: 1;
+  padding: 20px;
+  margin-top: 60px; /* 为固定的header留出空间 */
+}
+
+.loading-indicator {
+  text-align: center;
+  padding: 40px;
+  color: #5f6368;
+  font-size: 16px;
+}
+
+.error-container {
+  max-width: 600px;
+  margin: 40px auto;
+  text-align: center;
+  padding: 30px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.error-message {
+  color: #d93025;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.back-button {
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: #1765cc;
+}
+
+.snapshot-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.snapshot-header {
+  margin-bottom: 20px;
+}
+
+.snapshot-header .back-button {
+  margin-bottom: 16px;
+}
+
+.snapshot-meta {
+  margin-bottom: 16px;
+}
+
+.snapshot-title {
+  font-size: 24px;
+  color: #202124;
+  margin: 0 0 8px;
+  font-weight: 500;
+}
+
+.snapshot-url {
+  font-size: 14px;
+  color: #1a0dab;
+  margin-bottom: 8px;
+  word-break: break-all;
+}
+
+.snapshot-date {
+  font-size: 14px;
+  color: #70757a;
+}
+
+.snapshot-divider {
+  height: 1px;
+  background-color: #dadce0;
+  margin-bottom: 20px;
+}
+
+.snapshot-frame-container {
+  background-color: #fff;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.snapshot-frame {
+  padding: 20px;
+  min-height: 500px;
+  overflow-x: auto;
+}
+
+/* 快照内容的样式覆盖 */
+.snapshot-frame h1 {
+  font-size: 24px;
+  color: #202124;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.snapshot-frame h2 {
+  font-size: 20px;
+  color: #202124;
+  margin-top: 24px;
+  margin-bottom: 12px;
+}
+
+.snapshot-frame p {
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.snapshot-frame ul {
+  margin-bottom: 16px;
+  padding-left: 24px;
+}
+
+.snapshot-frame li {
+  margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .snapshot-title {
+    font-size: 20px;
+  }
+  
+  .snapshot-frame {
+    padding: 15px;
+  }
+}

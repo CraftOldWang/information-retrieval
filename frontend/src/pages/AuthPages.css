@@ -1,0 +1,133 @@
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  margin-top: 60px; /* 为固定的header留出空间 */
+  background-color: #f8f9fa;
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 400px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+
+.auth-title {
+  font-size: 24px;
+  color: #202124;
+  margin-top: 0;
+  margin-bottom: 24px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.auth-form {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  color: #5f6368;
+  margin-bottom: 8px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 16px;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #1a73e8;
+}
+
+.error-message {
+  color: #d93025;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+.auth-error {
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  background-color: #fce8e6;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.auth-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.auth-button:hover:not(:disabled) {
+  background-color: #1765cc;
+}
+
+.auth-button:disabled {
+  background-color: #dadce0;
+  cursor: not-allowed;
+}
+
+.auth-links {
+  text-align: center;
+  font-size: 14px;
+  color: #5f6368;
+}
+
+.auth-links a {
+  color: #1a73e8;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-links a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 20px;
+  }
+  
+  .auth-title {
+    font-size: 20px;
+  }
+  
+  .form-group input {
+    font-size: 14px;
+  }
+  
+  .auth-button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}

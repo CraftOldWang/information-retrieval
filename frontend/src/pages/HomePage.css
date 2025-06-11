@@ -1,0 +1,111 @@
+.home-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin-top: 60px; /* 为固定的header留出空间 */
+}
+
+.search-container {
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.logo-container {
+  margin-bottom: 30px;
+}
+
+.logo-text {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #202124;
+  margin: 0;
+  letter-spacing: -1px;
+}
+
+.logo-highlight {
+  color: #4285f4;
+}
+
+.search-tips {
+  margin-top: 20px;
+  text-align: left;
+  color: #5f6368;
+  font-size: 14px;
+}
+
+.search-tips p {
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.search-tips ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.search-tips li {
+  margin-bottom: 5px;
+  padding-left: 15px;
+  position: relative;
+}
+
+.search-tips li:before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #4285f4;
+}
+
+.personalized-section {
+  width: 100%;
+  max-width: 700px;
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.personalized-section h2 {
+  color: #202124;
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.personalized-section p {
+  color: #5f6368;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+  .logo-text {
+    font-size: 3rem;
+  }
+  
+  .search-container {
+    padding: 0 20px;
+  }
+  
+  .personalized-section {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-text {
+    font-size: 2.5rem;
+  }
+}
