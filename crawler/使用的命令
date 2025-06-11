@@ -107,3 +107,12 @@ scrapy crawl nku_es_fed_incremental `
     -s LOG_FILE=../data/logs/crawler_notselfcrawl1_$(Get-Date -Format "yyyyMMdd_HHmmss").log
 
 注意我把从页面获取新 url 的代码注释掉了。 parse 里面
+
+scrapy crawl nku_es_fed_incremental `
+    -s CLOSESPIDER_PAGECOUNT=30000 `
+    -s DOWNLOAD_DELAY=1 `
+    -s CONCURRENT_REQUESTS=24 `
+    -s CONCURRENT_REQUESTS_PER_DOMAIN=16 `
+    -s AUTOTHROTTLE_TARGET_CONCURRENCY=2.0 `
+    -s LOG_LEVEL=INFO `
+    -s LOG_FILE=../data/logs/temp_crawler_notselfcrawl1_$(Get-Date -Format "yyyyMMdd_HHmmss").log
