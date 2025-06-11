@@ -1,56 +1,62 @@
 {
   "mappings": {
     "properties": {
-      "url": {
-        "type": "keyword"
-      },
+      "url": { "type": "keyword" },
       "title": {
         "type": "text",
-        "analyzer": "standard",
+        "analyzer": "default",
         "fields": {
-          "keyword": {
-            "type": "keyword"
-          }
+          "keyword": { "type": "keyword" }
         }
       },
-      "content": {
-        "type": "text",
-        "analyzer": "standard"
-      },
+      "content": { "type": "text", "analyzer": "default" },
+      "html": { "type": "text", "store": true },
       "anchor_texts": {
-        "type": "text",
-        "analyzer": "standard"
+        "type": "nested",
+        "properties": {
+          "text": { "type": "text", "analyzer": "default" },
+          "href": { "type": "keyword" }
+        }
       },
-      "domain": {
-        "type": "keyword"
+      "domain": { "type": "keyword" },
+      "metadata": {
+        "properties": {
+          "crawl_time": { "type": "date" },
+          "last_modified": { "type": "date" },
+          "content_type": { "type": "keyword" }
+        }
       },
-      "crawl_time": {
-        "type": "date"
-      },
-      "last_modified": {
-        "type": "date"
-      },
-      "content_type": {
-        "type": "keyword"
-      },
-      "file_size": {
-        "type": "integer"
-      },
-      "links_count": {
-        "type": "integer"
-      },
-      "depth": {
-        "type": "integer"
+      "attachments": {
+        "type": "nested",
+        "properties": {
+          "url": { "type": "keyword" },
+          "filename": {
+            "type": "text",
+            "fields": {
+              "keyword": { "type": "keyword" }
+            }
+          },
+          "type": { "type": "keyword" },
+          "metadata": {
+            "properties": {
+              "title": { "type": "text", "analyzer": "default" },
+              "author": { "type": "text" },
+              "upload_date": { "type": "date" },
+              "file_size": { "type": "long" }
+            }
+          }
+        }
       }
     }
   },
   "settings": {
-    "number_of_shards": 1,
-    "number_of_replicas": 0,
+    "number_of_shards": 3,
+    "number_of_replicas": 1,
     "analysis": {
       "analyzer": {
         "default": {
-          "type": "standard"
+          "type": "custom",
+          "tokenizer": "ik_smart"
         }
       }
     }
