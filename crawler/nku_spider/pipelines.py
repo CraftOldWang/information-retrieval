@@ -110,6 +110,11 @@ class DuplicatesPipeline:
 
         # 检查是否重复
         if self.is_duplicate(url_hash, spider):
+            item["content"] = " "
+            item["anchor_texts"] = []
+            item["attachments"] = []
+            item["content"] = " "
+            item["html"] = " "
             raise DropItem(f"重复URL: {url}")
 
         # 标记为已处理
