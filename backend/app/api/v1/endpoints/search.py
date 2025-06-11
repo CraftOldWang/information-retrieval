@@ -5,7 +5,8 @@ from datetime import datetime
 import logging
 
 from app.core.config import settings
-from app.services.elasticsearch_service import ElasticsearchService
+# 修改导入路径，使用新的实现
+from app.services.elasticsearch_service_implementation import ElasticsearchService
 from app.models.schemas import SearchQuery, SearchResponse
 from app.services.user_service import get_current_user, get_optional_user
 from app.models.schemas import UserProfile

@@ -36,8 +36,10 @@ TELNETCONSOLE_ENABLED = False
 DEFAULT_REQUEST_HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36",
 }
+
+
 
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
@@ -143,10 +145,10 @@ ROBOTSTXT_USE_CACHE = True
 ROBOTSTXT_CACHE_SIZE = 500
 
 # 爬取超时设置
-DOWNLOAD_TIMEOUT = 7
+DOWNLOAD_TIMEOUT = 10
 
 # 重试设置
-RETRY_TIMES = 0
+RETRY_TIMES = 1
 RETRY_HTTP_CODES = [500, 502, 503, 504, 408, 429]
 
 # DNS超时

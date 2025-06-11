@@ -67,6 +67,14 @@ class NkuEsFedIncrementalSpider(scrapy.Spider):
         self.urls_to_crawl_batch = [] # Holds the current batch of URLs
         self.crawl_batch_size =  1000 # Target number of unique URLs per batch
 
+        # 添加用于独立检查的正则表达式列表
+        self.deny_patterns = [
+            r".*\.pdf$", r".*\.doc$", r".*\.docx$", r".*\.xls$", r".*\.xlsx$",
+            r".*\.ppt$", r".*\.pptx$", r".*\.zip$", r".*\.rar$",
+            r"/download/", r"/files/", r"/uploads/",
+        ]
+        self.deny_regex = [re.compile(pattern) for pattern in self.deny_patterns]
+
     def _generate_url_hash(self, url: str) -> str:
         return hashlib.md5(url.encode("utf-8")).hexdigest()
 
@@ -80,6 +88,13 @@ class NkuEsFedIncrementalSpider(scrapy.Spider):
         except redis.exceptions.RedisError as e:
             self.logger.error(f"Redis sismember failed for hash {url_hash} (URL: {url}): {e}. Assuming not seen.")
             return False
+
+    def _is_url_denied(self, url):
+        """检查URL是否应该被拒绝访问（例如，文档和下载文件）"""
+        for pattern in self.deny_regex:
+            if pattern.search(url):
+                return True
+        return False
 
     def start_requests(self):
         # Initialize Redis client
@@ -171,6 +186,7 @@ class NkuEsFedIncrementalSpider(scrapy.Spider):
             response = self.es_client.search(index=self.es_index_name, body=query)
             
             new_urls_found = set() # Use a set to handle duplicates within the ES response
+            filtered_count = 0
             for hit in response['hits']['hits']:
                 source = hit.get("_source", {})
                 anchor_texts_data = source.get("anchor_texts", [])
@@ -179,15 +195,18 @@ class NkuEsFedIncrementalSpider(scrapy.Spider):
                         if isinstance(anchor, dict):
                             target_url = anchor.get("href")
                             if target_url and isinstance(target_url, str) and target_url.startswith(('http://', 'https://')):
-                                if not self._is_url_seen(target_url):
+                                # 添加过滤逻辑，确保不添加被拒绝的URL
+                                if not self._is_url_seen(target_url) and not self._is_url_denied(target_url):
                                     new_urls_found.add(target_url)
                                     if len(new_urls_found) >= self.crawl_batch_size:
                                         break
+                                elif self._is_url_denied(target_url):
+                                    filtered_count += 1
                 if len(new_urls_found) >= self.crawl_batch_size:
                     break
             
             self.urls_to_crawl_batch.extend(list(new_urls_found))
-            self.logger.info(f"ES Fetch Complete. Found {len(self.urls_to_crawl_batch)} new unique URLs to add to the queue.")
+            self.logger.info(f"ES Fetch Complete. Found {len(self.urls_to_crawl_batch)} new unique URLs to add to the queue. Filtered {filtered_count} denied URLs.")
 
         except elasticsearch.exceptions.ElasticsearchException as e:
             self.logger.error(f"Error fetching random URLs from Elasticsearch: {e}")
@@ -253,7 +272,7 @@ class NkuEsFedIncrementalSpider(scrapy.Spider):
         # Continue crawling links extracted from this page
         links = self.link_extractor.extract_links(response)
         for link in links:
-            if not self._is_url_seen(link.url):
+            if not self._is_url_seen(link.url) and not self._is_url_denied(link.url):
                 parsed_link_url = urlparse(link.url)
                 if parsed_link_url.netloc and any(parsed_link_url.netloc == domain or parsed_link_url.netloc.endswith("." + domain) for domain in self.allowed_domains):
                     if parsed_link_url.netloc not in self.discovered_domains:
@@ -266,7 +285,8 @@ class NkuEsFedIncrementalSpider(scrapy.Spider):
                     #     meta={"depth": response.meta.get("depth", 0) + 1},
                     # )
             else:
-                self.logger.debug(f"Skipping already seen URL from page {response.url}: {link.url}")
+                reason = "已经访问过" if self._is_url_seen(link.url) else "属于拒绝访问类型"
+                self.logger.debug(f"跳过URL ({reason}): {link.url}")
 
     # --- All helper methods (extract_title, etc.) are copied directly ---
     # --- and remain unchanged. They are omitted here for brevity.    ---

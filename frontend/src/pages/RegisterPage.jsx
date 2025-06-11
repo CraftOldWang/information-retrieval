@@ -81,7 +81,15 @@ const RegisterPage = () => {
     setIsSubmitting(true);
     
     try {
-      await register(formData.username, formData.email, formData.password);
+      // 创建符合后端要求的用户数据对象
+      const userData = {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password
+        // 可以添加其他可选字段如college, major, grade
+      };
+      
+      await register(userData);
       // 注册成功后的重定向在useEffect中处理
     } catch (err) {
       console.error('注册失败:', err);
