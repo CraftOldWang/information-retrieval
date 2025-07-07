@@ -8,7 +8,6 @@ import './AuthPages.css';
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
     username: '',
-    email: '',
     password: '',
     confirmPassword: ''
   });
@@ -40,6 +39,14 @@ const RegisterPage = () => {
         [name]: ''
       }));
     }
+    
+    // 清除通用错误
+    if (errors.general) {
+      setErrors(prev => ({
+        ...prev,
+        general: ''
+      }));
+    }
   };
 
   // 表单验证
@@ -50,12 +57,6 @@ const RegisterPage = () => {
       newErrors.username = '用户名不能为空';
     } else if (formData.username.length < 3) {
       newErrors.username = '用户名至少需要3个字符';
-    }
-    
-    if (!formData.email.trim()) {
-      newErrors.email = '邮箱不能为空';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = '请输入有效的邮箱地址';
     }
     
     if (!formData.password) {
@@ -84,7 +85,6 @@ const RegisterPage = () => {
       // 创建符合后端要求的用户数据对象
       const userData = {
         username: formData.username,
-        email: formData.email,
         password: formData.password
         // 可以添加其他可选字段如college, major, grade
       };
@@ -93,6 +93,19 @@ const RegisterPage = () => {
       // 注册成功后的重定向在useEffect中处理
     } catch (err) {
       console.error('注册失败:', err);
+      // 设置具体的错误信息
+      if (err.message.includes('Username already exists')) {
+        setErrors(prev => ({
+          ...prev,
+          username: '用户名已存在'
+        }));
+      } else {
+        // 显示通用错误
+        setErrors(prev => ({
+          ...prev,
+          general: err.message || '注册失败，请稍后重试'
+        }));
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -121,18 +134,7 @@ const RegisterPage = () => {
               {errors.username && <div className="error-message">{errors.username}</div>}
             </div>
             
-            <div className="form-group">
-              <label htmlFor="email">邮箱</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                disabled={isSubmitting}
-              />
-              {errors.email && <div className="error-message">{errors.email}</div>}
-            </div>
+
             
             <div className="form-group">
               <label htmlFor="password">密码</label>
@@ -158,9 +160,12 @@ const RegisterPage = () => {
                 disabled={isSubmitting}
               />
               {errors.confirmPassword && <div className="error-message">{errors.confirmPassword}</div>}
+              
+              {/* 显示通用错误信息 */}
+              {errors.general && <div className="error-message auth-error">{errors.general}</div>}
+              
+              {authError && <div className="error-message auth-error">{authError}</div>}
             </div>
-            
-            {authError && <div className="error-message auth-error">{authError}</div>}
             
             <button 
               type="submit" 
@@ -177,7 +182,7 @@ const RegisterPage = () => {
         </div>
       </main>
       
-      <Footer />
+       
     </div>
   );
 };

@@ -67,25 +67,6 @@ const SearchResult = ({ result, onFeedback }) => {
         <Link to={`/snapshot/${result.id}`} className="result-action">
           <span className="action-icon">📄</span> 网页快照
         </Link>
-        
-        {currentUser && (
-          <div className="result-feedback">
-            <button 
-              className="feedback-button" 
-              onClick={() => handleFeedbackClick('like')}
-              aria-label="喜欢"
-            >
-              <span className="feedback-icon">👍</span>
-            </button>
-            <button 
-              className="feedback-button" 
-              onClick={() => handleFeedbackClick('dislike')}
-              aria-label="不喜欢"
-            >
-              <span className="feedback-icon">👎</span>
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );

@@ -11,9 +11,9 @@ const ProfilePage = () => {
   
   const [profileData, setProfileData] = useState({
     username: '',
-    email: '',
-    interests: '',
-    notification: false
+    college: '',
+    major: '',
+    grade: ''
   });
   
   const [searchHistory, setSearchHistory] = useState([]);
@@ -41,9 +41,9 @@ const ProfilePage = () => {
       setTimeout(() => {
         setProfileData({
           username: currentUser.username || '',
-          email: currentUser.email || '',
-          interests: currentUser.interests || '',
-          notification: currentUser.notification || false
+          college: currentUser.college || '',
+          major: currentUser.major || '',
+          grade: currentUser.grade || ''
         });
         setIsLoading(false);
       }, 500);
@@ -150,7 +150,7 @@ const ProfilePage = () => {
         <main className="profile-content">
           <div className="loading-indicator">加载中...</div>
         </main>
-        <Footer />
+         
       </div>
     );
   }
@@ -173,7 +173,7 @@ const ProfilePage = () => {
               </div>
               <div className="profile-info">
                 <h2>{profileData.username}</h2>
-                <p>{profileData.email}</p>
+
               </div>
               <button 
                 className="edit-button"
@@ -196,17 +196,7 @@ const ProfilePage = () => {
                   />
                 </div>
                 
-                <div className="form-group">
-                  <label htmlFor="email">邮箱</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={profileData.email}
-                    onChange={handleChange}
-                    disabled
-                  />
-                </div>
+
                 
                 <div className="form-group">
                   <label htmlFor="interests">兴趣标签（用逗号分隔）</label>
@@ -299,7 +289,7 @@ const ProfilePage = () => {
         </div>
       </main>
       
-      <Footer />
+       
     </div>
   );
 };

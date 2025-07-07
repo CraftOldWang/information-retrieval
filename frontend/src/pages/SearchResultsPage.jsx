@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import SearchBox from '../components/SearchBox';
 import SearchResult from '../components/SearchResult';
 import { AuthContext } from '../contexts/AuthContext';
-import { search, personalizedSearch, getRelatedQueries } from '../services/searchService';
+import { search, personalizedSearch, /* getRelatedQueries */ } from '../services/searchService';
 import { submitFeedback } from '../services/authService';
 import { SEARCH_TYPES } from '../config';
 import './SearchResultsPage.css';
@@ -69,11 +69,12 @@ const SearchResultsPage = () => {
         totalResults: response.total_results || 0
       });
       
-      // 获取相关查询
-      if (query.trim()) {
-        const relatedData = await getRelatedQueries(query);
-        setRelatedQueries(relatedData || []);
-      }
+      // 获取相关查询 - 暂时注释掉避免404错误
+      // if (query.trim()) {
+      //   const relatedData = await getRelatedQueries(query);
+      //   setRelatedQueries(relatedData || []);
+      // }
+      setRelatedQueries([]); // 暂时设置为空数组
     } catch (err) {
       setError(err.message || '搜索时发生错误');
       setResults([]);
@@ -328,7 +329,7 @@ const SearchResultsPage = () => {
         </div>
       </main>
       
-      <Footer />
+       
     </div>
   );
 };

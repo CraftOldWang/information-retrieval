@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { searchWeb, searchDocuments, getRelatedQueries, submitResultFeedback } from '../services/searchService';
+import { searchWeb, searchDocuments, /* getRelatedQueries, */ submitResultFeedback } from '../services/searchService';
 import { parseSearchQuery, buildSearchFilters, extractSearchParams } from '../utils/searchUtils';
 import { buildQueryString, parseQueryString } from '../utils/helpers';
 import { normalizeError, logError } from '../utils/errorHandler';
@@ -84,16 +84,17 @@ const useSearch = (options = {}) => {
       setTotalPages(response.total_pages || 0);
       setSearchTime(response.search_time || 0);
       
-      // 获取相关查询
-      if (response.results && response.results.length > 0) {
-        try {
-          const relatedResponse = await getRelatedQueries(query);
-          setRelatedQueries(relatedResponse.queries || []);
-        } catch (relatedError) {
-          console.warn('获取相关查询失败:', relatedError);
-          setRelatedQueries([]);
-        }
-      }
+      // 获取相关查询 - 暂时注释掉避免404错误
+      // if (response.results && response.results.length > 0) {
+      //   try {
+      //     const relatedResponse = await getRelatedQueries(query);
+      //     setRelatedQueries(relatedResponse.queries || []);
+      //   } catch (relatedError) {
+      //     console.warn('获取相关查询失败:', relatedError);
+      //     setRelatedQueries([]);
+      //   }
+      // }
+      setRelatedQueries([]); // 暂时设置为空数组
     } catch (err) {
       const normalizedError = normalizeError(err);
       setError(normalizedError);

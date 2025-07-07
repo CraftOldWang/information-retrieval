@@ -281,7 +281,7 @@ const DocumentSearchPage = () => {
         </div>
       </main>
       
-      <Footer />
+       
     </div>
   );
 };

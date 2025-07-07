@@ -44,15 +44,19 @@ export const search = async (query, page = 1, pageSize = 10, searchType = 'norma
 // 文档搜索
 export const searchDocuments = async (query, page = 1, pageSize = 10, docType = [], filters = {}) => {
   try {
+    // 检测查询类型
+    const queryInfo = detectQueryType(query);
+    
     const params = {
       q: query,
       page,
       page_size: pageSize,
       doc_type: docType,
+      search_type: queryInfo.searchType,
       ...filters
     };
     
-    const response = await api.get('/documents', { params });
+    const response = await api.get('/search/documents', { params });
     return response.data;
   } catch (error) {
     throw handleError(error);

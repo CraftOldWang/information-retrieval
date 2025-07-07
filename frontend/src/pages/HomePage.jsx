@@ -53,7 +53,7 @@ const HomePage = () => {
         )}
       </main>
       
-      <Footer />
+       
     </div>
   );
 };
